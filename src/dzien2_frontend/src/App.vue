@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { dzien2_backend } from 'declarations/dzien2_backend/index';
+import Blog from "./blog/blog.vue"
 let greeting = ref('');
 
 async function handleSubmit(e) {
@@ -25,10 +26,11 @@ async function handleSubmit(e) {
       <input id="name" alt="Name" type="text" />
       <label for="name">Enter your last name: &nbsp;</label>
       <input id="LN" alt="Name" type="text" /><br>
-      <label for="name">Enter your IQ: &nbsp;</label>
+      <label for="iq">Enter your IQ: &nbsp;</label>
       <input id="IQ" alt="Name" type="number" />
       <button type="submit">Click Me!</button>
     </form>
     <section id="greeting">{{ greeting }}</section>
+    <Blog />
   </main>
 </template>

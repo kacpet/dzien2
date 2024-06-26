@@ -1,13 +1,6 @@
 
-
-
-
 <template>
 <div>
-  
-
-
-
     <button @click="pobierzWpisy" >tekst </button>
 {{ wpisy }}
 <input v-model="nowyBlog" type="text">

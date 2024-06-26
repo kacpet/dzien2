@@ -16,7 +16,7 @@ fn dodaj_wpis(wpis: String){
     });
 }
 #[ic_cdk::query]
-fn oczytaj_wpisy() -> Vec<String>{
+fn odczytaj_wpisy() -> Vec<String>{
     WPISY.with(|wpisy: &RefCell<Vec<String>>|{
         wpisy.borrow().clone()
     })

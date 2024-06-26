@@ -1,36 +1,43 @@
-<script setup>
-import { ref } from 'vue';
-import { dzien2_backend } from 'declarations/dzien2_backend/index';
-import Blog from "./blog/blog.vue"
-let greeting = ref('');
+<template>
+  <div>
+      <h2 class="text-blue-600">Wpisy na bloga:</h2>
+      <div class="w-100 flex flex-row-reverse">
+          <button @click="pobierzWpisy" class=" rounded bg-blue-600 text-white p-4">refresh</button>
+      </div>
+      <div class="grid mx-6 gap">
 
-async function handleSubmit(e) {
-  e.preventDefault();
-  const target = e.target;
-  const name = target.querySelector('#name').value;
-  const LN = target.querySelector('#LN').value;
-  const IQ = target.querySelector('#IQ').value;
-  await dzien2_backend.greet(name,LN,Number(IQ)).then((response) => {
-    greeting.value = response;
-  });
+      </div>
+      <div v-for="wpis in wpisy" class="bg-stone-300 drop-shadow-xl p-4" >
+          <p>{{ wpis }}</p>
+      </div>
+      <div class="grid flex-col">
+        <input v-model="nowyBlog"class="border-2 border-blue-600 p-4 " type="text">
+        <button @click="dodajWpisy" class="rounded bg-blue-600 text-white p-4">dodaj</button>
+      </div>
+      
+  </div>
+</template>
+
+<script>
+import { dzien2_backend } from 'declarations/dzien2_backend/index';
+
+export default{
+  data(){
+      return{
+          wpisy:[],
+          nowyBlog: ""
+      }
+  },
+  methods:{
+      async dodajWpisy(){
+          this.wpisy = await dzien2_backend.dodaj_wpis(this.nowyBlog);
+      },
+      async pobierzWpisy(){
+          this.wpisy = await dzien2_backend.odczytaj_wpisy();
+      }
+  },
+  async mounted(){
+      this.pobierzWpisy()
+  }
 }
 </script>
-
-<template>
-  <main>
-    <img src="/logo2.svg" alt="DFINITY logo" />
-    <br />
-    <br />
-    <form action="#" @submit="handleSubmit">
-      <label for="name">Enter your name: &nbsp;</label>
-      <input id="name" alt="Name" type="text" />
-      <label for="name">Enter your last name: &nbsp;</label>
-      <input id="LN" alt="Name" type="text" /><br>
-      <label for="iq">Enter your IQ: &nbsp;</label>
-      <input id="IQ" alt="Name" type="number" />
-      <button type="submit">Click Me!</button>
-    </form>
-    <section id="greeting">{{ greeting }}</section>
-    <Blog />
-  </main>
-</template>
